@@ -1,0 +1,46 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install API dependencies
+        run: |
+          cd api
+          npm install
+      - name: Run API tests
+        run: |
+          cd api
+          npm test
+      - name: Build and deploy API
+        run: |
+          cd api
+          npm run build && npm run deploy
+
+  webapp:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install web app dependencies
+        run: |
+          cd webapp
+          npm install
+      - name: Run web app tests
+        run: |
+          cd webapp
+          npm test
+      - name: Build and deploy web app
+        run: |
+          cd webapp
+          npm run build && npm run deploy
+
+
+
